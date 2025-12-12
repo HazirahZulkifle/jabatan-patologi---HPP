@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hospital Dashboard</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f7fa;
+    }
+
+    .box {
+        background:#eef5ff;
+        padding:15px;
+        border-radius:8px;
+        margin-bottom:12px;
+        cursor:pointer;
+        transition:0.2s;
+        box-shadow:0 1px 3px rgba(0,0,0,0.1);
+    }
+    .box:hover { background:#dce9ff; }
+
+    /* SIDEBAR */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        background: #1e73be;
+        color: white;
+        padding-top: 20px;
+        transition: 0.3s;
+        overflow-y: auto;
+    }
+
+    .sidebar.closed {
+        width: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .toggle-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        background: #1e73be;
+        color: white;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+        z-index: 10;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar ul li {
+        padding: 15px 20px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .sidebar ul li:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* MAIN CONTENT */
+    .content {
+        margin-left: 260px;
+        padding: 20px;
+        transition: 0.3s;
+    }
+
+    .content.full {
+        margin-left: 20px;
+    }
+
+    .section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .box {
+        background:#eef5ff;
+        padding:15px;
+        border-radius:8px;
+        margin-bottom:12px;
+        cursor:pointer;
+        transition:0.2s;
+        box-shadow:0 1px 3px rgba(0,0,0,0.1);
+    }
+    .box:hover {
+        background:#dce9ff;
+    }
+    .section a {
+        color: #1e73be;
+        text-decoration: none;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+
+<div class="sidebar" id="sidebar">
+    <ul>
+        <li onclick="showPage('main')">Main Page</li>
+        <li onclick="toggleSubmenu('generalMenu')">General ▾</li>
+            <ul id="generalMenu" style="display:none; padding-left:20px;">
+                <li onclick="showPage('Topic')">Topic</li>
+                <li onclick="showPage('Section')">Seksyen</li>
+            </ul>
+        <li onclick="showPage('forms')">Forms</li>
+        <li onclick="showPage('quality_doc')">Quality Document</li>
+        <li onclick="showPage('surat_memo')">Surat & Memo</li>
+        <li onclick="showPage('lab_handbook')">Lab Handbook</li>
+    </ul>
+</div>
+
+<div class="content" id="content">
+</div>
+
+<script>
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
+
+    sidebar.classList.toggle('closed');
+    content.classList.toggle('full');
+}
+
+function toggleSubmenu(id){
+    const menu=document.getElementById(id);
+    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
+const pages = {
+    main: `
+        <div class='section'>
+            <center>
+                <img src='logo_hosp.jpeg' alt='Logo Hospital' width='350' style='margin-bottom:20px;'>
+                <h1>HOSPITAL PULAU PINANG</h1>
+                <h3>Jabatan Patologi</h3>
+            </center>
+
+            <h2 style="margin-top:40px; text-align:center;">Senarai Staf</h2>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:20px; margin-top:20px;">
+                <div style='background:#eef5ff; padding:15px; border-radius:10px; text-align:center;'>
+                    <img src='LEO1.jpeg' width='100' style='border-radius:50%; margin-bottom:10px;'>
+                    <h4>LEO</h4>
+                </div>
+
+                <div style='background:#eef5ff; padding:15px; border-radius:10px; text-align:center;'>
+                    <img src='LEO2.jpeg' width='100' style='border-radius:50%; margin-bottom:10px;'>
+                    <h4>BENJAMIN</h4>
+                </div>
+
+                <div style='background:#eef5ff; padding:15px; border-radius:10px; text-align:center;'>
+                    <img src='LEO3.jpeg' width='100' style='border-radius:50%; margin-bottom:10px;'>
+                    <h4>Nama AMIN</h4>
+                </div>
+
+                <div style='background:#eef5ff; padding:15px; border-radius:10px; text-align:center;'>
+                    <img src='LEO4.jpeg' width='100' style='border-radius:50%; margin-bottom:10px;'>
+                    <h4>MATYO</h4>
+                </div>
+
+            </div>
+        </div
+        </div>
+    `,
+
+    Topic: `
+        <div class='section'>
+            <h2> Topic</h2>
+            <div class='box' onclick="openFile('documents/topic1.pdf')">CALIBRATION</div>
+            <div class='box' onclick="openFile('documents/topic2.pdf')">STORE</div>
+            <div class='box' onclick="openFile('documents/topic3.pdf')">APS</div>
+            <div class='box' onclick="openFile('documents/topic4.pdf')">POCT</div>
+            <div class='box' onclick="openFile('documents/topic2.pdf')">GUIDELINES</div>
+            <div class='box' onclick="openFile('documents/topic3.pdf')">CME & KURSUS</div>
+            <div class='box' onclick="openFile('documents/topic4.pdf')">PEROLEHAN</div>
+        </div>
+    `,
+
+    Section: `
+        <div class='section'>
+            <h2> Seksyen</h2>
+            <div class='box' onclick="openFile('documents/section1.pdf')">CC</div>
+            <div class='box' onclick="openFile('documents/section2.pdf')">CORE LAB</div>
+                        <div class='box' onclick="openFile('documents/section1.pdf')">HBATC</div>
+            <div class='box' onclick="openFile('documents/section2.pdf')">1A</div>
+        </div>
+    `,
+
+    forms: `
+        <div class='section'>
+            <h2>Forms</h2>
+            <div class='box' onclick="openFile('documents/formA.pdf')">Form A</div>
+            <div class='box' onclick="openFile('documents/formB.pdf')">Form B</div>
+            <div class='box' onclick="openFile('documents/formC.pdf')">Form C</div>
+        </div>
+    `,
+
+    quality_doc: `
+        <div class='section'>
+            <h2>Quality Document</h2>
+            <div class='box' onclick="openFile('documents/formA.pdf')">DOC A</div>
+            <div class='box' onclick="openFile('documents/formB.pdf')">DOC B</div>
+            <div class='box' onclick="openFile('documents/formC.pdf')">DOC C</div>
+        </div>
+    `,
+
+    surat_memo: `
+        <div class='section'>
+            <h2>Surat & Memo</h2>
+            <div class='box' onclick="openFile('documents/formA.pdf')">SURAT A</div>
+            <div class='box' onclick="openFile('documents/formA.pdf')">SURAT B</div>
+            <div class='box' onclick="openFile('documents/formC.pdf')">SURAT C</div>
+        </div>
+    `,
+
+    lab_handbook: `
+        <div class='section'>
+            <h2>Lab Handbook</h2>
+            <div class='box' onclick="openFile('documents/formA.pdf')">LAB A</div>
+            <div class='box' onclick="openFile('documents/formB.pdf')">LAB B</div>
+            <div class='box' onclick="openFile('documents/formC.pdf')">LAB C</div>
+        </div>
+    `,
+};
+
+function showPage(page) {
+    document.getElementById('content').innerHTML = pages[page];
+}
+
+function openFile(file) {
+    document.getElementById('content').innerHTML = `
+        <div class='section'>
+            <iframe src="${file}" style="width:100%; height:80vh; border:none;"></iframe>
+        </div>
+    `;
+}
+
+showPage('main');
+</script>
+
+</body>
+</html>
